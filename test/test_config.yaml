@@ -1,0 +1,22 @@
+uevent_description:
+  hardware_type: "camera"
+  devpath:  "/devices/platform/tegra-capture-vi"
+  identifier_key: "CAUSE"
+  key_is: ".* 12-001c"
+  hardware_id: "camera0"
+  value_key: "FUSA_HW_FAULT"
+  value_type: "bool"
+  criteria:
+    status_ok: 1
+    status_error: 0
+uevent_description:
+  hardware_type: "camera"
+  devpath:  "/devices/platform/tegra-capture-vi"
+  identifier_key: "CAUSE"
+  key_is: ""
+  hardware_id: "camera1"
+  value_key: "FUSA_HW_FAULT"
+  value_type: "bool"
+  criteria:
+    status_ok: 1
+    status_error: 0
