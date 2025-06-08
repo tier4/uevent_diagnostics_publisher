@@ -17,6 +17,7 @@
 
 #include "uevent_diagnostics_publisher/interpreters/interpreter_base.hpp"
 #include "uevent_diagnostics_publisher/interpreters/vi_camera_interpreter.hpp"
+#include "uevent_diagnostics_publisher/interpreters/proframe_camera_interpreter.hpp"
 
 #include <functional>
 #include <memory>
@@ -34,7 +35,7 @@ public:
     std::unordered_map<std::string, std::function<std::shared_ptr<InterpreterBase>()>>
       interpreters_map_ = {
         {"vi_camera", []() { return std::make_shared<ViCameraInterpreter>(); }},
-        {"proframe_camera", []() { return std::make_shared<InterpreterBase>(); }},
+        {"proframe_camera", []() { return std::make_shared<ProFrameCameraInterpreter>(); }},
       };
 
     auto it = interpreters_map_.find(hardware_type);
