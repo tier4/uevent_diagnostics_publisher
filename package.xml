@@ -5,6 +5,7 @@
   <version>0.0.0</version>
   <description>The uevent_diagnostics_publisher package</description>
   <maintainer email="manato.hirabayashi@tier4.jp">Manato Hirabayashi</maintainer>
+  <maintainer email="ryo.munakata@tier4.jp">Ryo Munakata</maintainer>
 
   <license>Apache 2</license>
 
