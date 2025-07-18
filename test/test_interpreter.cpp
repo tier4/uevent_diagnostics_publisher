@@ -10,13 +10,14 @@ TEST(InterpreterBaseTest, RegexTest)
 {
   auto interpreter_map = uevent_diagnostics_publisher::InterpreterMap();
   auto vi_camera_interpreter = interpreter_map.getInterPreter("vi_camera");
-  vi_camera_interpreter->setup(
-    ".*/tegra-capture-vi",  // dev_path
-    "CAUSE1",               // identifier_key
-    ".* 12-001c",           // key_regex
-    "camera0",              // hardware_id
-    "FUSA_HW_FAULT",        // value_key
-    "bool");                // value_type
+  vi_camera_interpreter
+    ->InterpreterBase::setup(  // call base class setup to bypass platform specific behavior
+      ".*/tegra-capture-vi",   // dev_path
+      "CAUSE1",                // identifier_key
+      ".* 12-001c",            // key_regex
+      "camera0",               // hardware_id
+      "FUSA_HW_FAULT",         // value_key
+      "bool");                 // value_type
 
   std::map<std::string, std::string> dummy_uevent;
   dummy_uevent["ACTION"] = "change";
@@ -57,18 +58,19 @@ TEST(ViCameraInterpreterTest, SearchVideoDeviceTest)
 
   auto interpreter_map = uevent_diagnostics_publisher::InterpreterMap();
   auto vi_camera_interpreter = interpreter_map.getInterPreter("vi_camera");
-  vi_camera_interpreter->setup(
-    ".*/tegra-capture-vi",  // dev_path
-    "CAUSE1",               // identifier_key
-    ".* 12-001c",           // key_regex
-    "camera0",              // hardware_id
-    "FUSA_HW_FAULT",        // value_key
-    "bool");                // value_type
+  vi_camera_interpreter
+    ->InterpreterBase::setup(  // call base class setup to bypass platform specific behavior
+      ".*/tegra-capture-vi",   // dev_path
+      "CAUSE1",                // identifier_key
+      ".* 12-001c",            // key_regex
+      "camera0",               // hardware_id
+      "FUSA_HW_FAULT",         // value_key
+      "bool");                 // value_type
   auto interpreter =
     static_cast<uevent_diagnostics_publisher::ViCameraInterpreter *>(vi_camera_interpreter.get());
 
   EXPECT_EQ(
-    interpreter->searchDeviceNodeFromI2cBusAddr(V4L2_FILE_SEARCH_PATH, "12-001c"), "video0");
+    interpreter->searchDeviceNodeFromI2cBusAddr(V4L2_FILE_SEARCH_PATH, ".* 12-001[a-z]"), "video0");
 }
 
 int main(int argc, char * argv[])

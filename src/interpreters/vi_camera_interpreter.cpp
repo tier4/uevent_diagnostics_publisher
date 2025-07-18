@@ -38,22 +38,13 @@ void ViCameraInterpreter::setup(
     dev_path_regex, identifier_key, key_regex, hardware_id, value_key, value_type);
 
   // find correspondign device node name
-  std::regex i2c_dev_addr_pattern("[0-9]+-[0-9]+[a-zA-Z]");  // will match strings like "12-001c"
-  std::smatch match;
-  std::string i2c_dev_addr_str;
-  if (std::regex_search(key_str_, match, i2c_dev_addr_pattern)) {
-    i2c_dev_addr_str = match.str();
-  } else {
-    throw std::runtime_error("I2C bus and address pattern is not found in the key");
-  }
-
-  device_node_ = searchDeviceNodeFromI2cBusAddr("/sys/class/video4linux", i2c_dev_addr_str);
+  device_node_ = searchDeviceNodeFromI2cBusAddr("/sys/class/video4linux", key_str_);
 }
 
 std::optional<std::string> ViCameraInterpreter::searchDeviceNodeFromI2cBusAddr(
-  const std::string & search_path, const std::string & i2c_bus_addr)
+  const std::string & search_path, const std::string & i2c_bus_addr_regex)
 {
-  // Search "<search_path>/videoX/name" contents if `i2c_bus_addr` is included in it
+  // Search "<search_path>/videoX/name" contents if `i2c_bus_addr_regex` matches its contents
   // If yes, `videoX` (e.g., `video0`) is the device node corresponding to the `i2c_bud_addr` (e.g.,
   // `12-001c`)
   std::optional<std::string> device_node_name = std::nullopt;
@@ -81,12 +72,8 @@ std::optional<std::string> ViCameraInterpreter::searchDeviceNodeFromI2cBusAddr(
     std::string line;
     while (std::getline(file, line)) {
       // Look for the pattern "bus-addr" in the line
-      std::regex i2c_pattern("[0-9]+-[0-9]+[a-zA-Z]+");
-      std::smatch match;
-      if (std::regex_search(line, match, i2c_pattern)) {
-        if (match.str() == i2c_bus_addr) {
-          device_node_name = video_name;
-        }
+      if (std::regex_match(line, std::regex(i2c_bus_addr_regex))) {
+        device_node_name = video_name;
       }
     }
   }
