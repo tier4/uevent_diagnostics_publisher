@@ -36,7 +36,7 @@ public:
   void interpret(const UeventDataType & event) override;
 
   static std::optional<std::string> searchDeviceNodeFromI2cBusAddr(
-    const std::string & search_path, const std::string & i2c_dev_addr);
+    const std::string & search_path, const std::string & i2c_dev_addr_regex);
 
 protected:
   std::optional<std::string> device_node_;
