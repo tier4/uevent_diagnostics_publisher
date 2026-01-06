@@ -1,4 +1,4 @@
-uevent_description:
+uevent_description_camera0:
   hardware_type: "camera"
   devpath:  "/devices/platform/tegra-capture-vi"
   identifier_key: "CAUSE"
@@ -9,7 +9,7 @@ uevent_description:
   criteria:
     status_ok: 1
     status_error: 0
-uevent_description:
+uevent_description_camera1:
   hardware_type: "camera"
   devpath:  "/devices/platform/tegra-capture-vi"
   identifier_key: "CAUSE"

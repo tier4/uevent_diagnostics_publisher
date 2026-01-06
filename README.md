@@ -52,7 +52,7 @@ ros2 run uevent_diagnostics_publisher uevent_diagnostics_publisher_node --ros-ar
 The `config_yaml_path` parameter points to a YAML file that defines the interpreters and their configurations. The YAML file should iterate the following structure:
 
 ```yaml
-uevent_description:
+uevent_description:  # Arbitrary key (such as `uevent_description_camera0`) can be used to avoid key duplication
   hardware_type:   # the interpreter type for an uevent diag publisher
   devpath:         # sysfs device path
   identifier_key:  # uevent property name
